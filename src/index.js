@@ -3,9 +3,11 @@ import Notiflix from 'notiflix';
 
 const searchQuery = document.querySelector('.search-form');
 const gallery = document.querySelector('.gallery');
+const loadButton = document.querySelector('.load-more');
 
 let page = 1;
 let currentQuery;
+let totalHits = 0;
 
 const searchParams = new URLSearchParams({
   key: '21423072-0f941905d82a42377d360632a',
@@ -83,10 +85,33 @@ searchQuery.addEventListener('submit', async event => {
   try {
     const photos = await fetchPhotos(searchQuery, page);
     renderPhotos(photos);
+    loadButton.classList.remove('hidden');
   } catch (error) {
     Notiflix.Notify.failure(`${error}`);
   }
 });
+
+loadButton.addEventListener('click', async () => {
+  page += 1;
+  try {
+    const photos = await fetchPhotos();
+    renderPhotos(photos, true);
+    loadMorePhotos(photos.hits.length, photos.totalHits);
+  } catch (error) {
+    Notiflix.Notify.failure(`${error}`);
+  }
+});
+
+function loadMorePhotos(loadedPhotosCount, totalHits) {
+  if (page * 40 >= totalHits || loadedPhotosCount === 0) {
+    loadButton.classList.add('hidden');
+    Notiflix.Notify.warning(
+      "We're sorry, but you've reached the end of search results."
+    );
+  } else {
+    loadButton.classList.remove('hidden');
+  }
+}
 
 
 
