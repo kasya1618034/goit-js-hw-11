@@ -2,8 +2,10 @@ import axios from 'axios';
 import Notiflix from 'notiflix';
 
 const searchQuery = document.querySelector('.search-form');
+const gallery = document.querySelector('.gallery');
 
 let page = 1;
+let currentQuery;
 
 const searchParams = new URLSearchParams({
   key: '21423072-0f941905d82a42377d360632a',
@@ -77,6 +79,23 @@ function renderPhotos(data, addToGallery = false) {
 
 searchQuery.addEventListener('submit', async event => {
   event.preventDefault();
+
+  const searchElem = searchQuery.elements[0].value.trim();
+  if (searchElem === '') {
+    Notiflix.Notify.warning('Please enter what you are looking for.');
+  } else {
+    currentQuery = searchElem;
+    page = 1;
+  }
+
+  try {
+    const photos = await fetchPhotos(searchQuery, page);
+    renderPhotos(photos);
+
+  } catch (error) {
+    Notiflix.Notify.failure(`${error}`);
+  }
+
 });
 
 
