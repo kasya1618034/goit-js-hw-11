@@ -29,7 +29,7 @@ const fetchPhotos = async () => {
 };
 
 function renderPhotos(data, addToGallery = false) {
-  if (data.hits.length === 0) {
+  if (data.hits.length === 0 && !(page * 40 >= totalHits)) {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
