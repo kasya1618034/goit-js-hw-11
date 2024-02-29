@@ -102,8 +102,8 @@ loadButton.addEventListener('click', async () => {
   }
 });
 
-function loadMorePhotos(loadedPhotosCount, totalHits) {
-  if (page * 40 >= totalHits || loadedPhotosCount === 0) {
+function loadMorePhotos(totalHits) {
+  if (page * 40 >= totalHits) {
     loadButton.classList.add('hidden');
     Notiflix.Notify.warning(
       "We're sorry, but you've reached the end of search results."
