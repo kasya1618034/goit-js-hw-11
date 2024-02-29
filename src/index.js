@@ -26,14 +26,6 @@ const fetchPhotos = async () => {
   return searchResults.data;
 };
 
-fetchPhotos()
-  .then(data => {
-    console.log(data);
-  })
-  .catch(error => {
-    console.error(error);
-  });
-
 function renderPhotos(data, addToGallery = false) {
   if (data.hits.length === 0) {
     Notiflix.Notify.failure(
@@ -91,11 +83,9 @@ searchQuery.addEventListener('submit', async event => {
   try {
     const photos = await fetchPhotos(searchQuery, page);
     renderPhotos(photos);
-
   } catch (error) {
     Notiflix.Notify.failure(`${error}`);
   }
-
 });
 
 
