@@ -75,6 +75,10 @@ function renderPhotos(data, addToGallery = false) {
   }
 }
 
+searchQuery.addEventListener('submit', async event => {
+  event.preventDefault();
+});
+
 
 
 
