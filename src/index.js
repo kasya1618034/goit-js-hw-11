@@ -44,7 +44,9 @@ function renderPhotos(data, addToGallery = false) {
           downloads,
     }) =>
       `<div class="photo-card">
-         <img class="gallery__image" src="${webformatURL}" alt="${tags}" loading="lazy"/>
+         <div class="gallery__image-wrap">
+           <img class="gallery__image" src="${webformatURL}" alt="${tags}" loading="lazy"/>
+         </div>
         <div class="info">
           <p class="info-item">
             <b>Likes: ${likes}</b>
