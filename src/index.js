@@ -76,7 +76,7 @@ searchQuery.addEventListener('submit', async event => {
 
   const searchElem = searchQuery.elements[0].value.trim();
   if (searchElem === '') {
-    Notiflix.Notify.warning('Please enter what you are looking for.');
+    Notiflix.Notify.failure('Please enter what you are looking for.');
   } else {
     currentQuery = searchElem;
     page = 1;
@@ -105,14 +105,12 @@ loadButton.addEventListener('click', async () => {
 function loadMorePhotos(totalHits) {
   if (page * 40 >= totalHits) {
     loadButton.classList.add('hidden');
-    Notiflix.Notify.warning(
+    Notiflix.Notify.failure(
       "We're sorry, but you've reached the end of search results."
     );
   } else {
     loadButton.classList.remove('hidden');
   }
 }
-
-
 
 

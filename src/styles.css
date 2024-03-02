@@ -12,9 +12,37 @@ body {
   display: none;
 }
 
+.search-wrap {
+  display: flex;
+  align-items: center;
+  background-color: #153594;
+  padding: 5px;
+}
+
 .search-form {
+  display: flex;
   text-align: center;
-  margin-top: 20px;
+  margin: auto;
+}
+
+.search-form input[type="text"] {
+  flex: 1;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.search-form button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.material-symbols-outlined {
+  font-size: 20px;
+  color: white;
 }
 
 .gallery {
@@ -54,6 +82,25 @@ body {
   text-align: center;
 }
 
+.load-more-btn-wrap {
+  position: relative;
+}
+
 .load-more {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   margin: auto;
+  bottom: 10px;
+  background-color: #153594;
+  color: white;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.load-more:hover {
+  background-color: #091a4a;
 }
