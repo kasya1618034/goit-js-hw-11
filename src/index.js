@@ -30,6 +30,7 @@ const fetchPhotos = async () => {
 
 function renderPhotos(data, addToGallery = false) {
   if (data.hits.length === 0) {
+    gallery.innerHTML = '';
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
@@ -79,8 +80,6 @@ searchQuery.addEventListener('submit', async event => {
   const searchElem = searchQuery.elements[0].value.trim();
   if (searchElem === '') {
     Notiflix.Notify.failure('Please enter what you are looking for.');
-    gallery.innerHTML = '';
-    loadButton.classList.add('hidden');
     return;
   } else {
     currentQuery = searchElem;
@@ -109,9 +108,6 @@ loadButton.addEventListener('click', async () => {
     const photos = await fetchPhotos();
     renderPhotos(photos, true);
     loadMorePhotos(photos.hits.length);
-    if (photos.hits.length === 0) {
-      loadButton.classList.add('hidden');
-    }
   } catch (error) {
     Notiflix.Notify.failure(`${error}`);
   }
