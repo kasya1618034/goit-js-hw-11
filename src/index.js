@@ -29,7 +29,7 @@ const fetchPhotos = async () => {
 };
 
 function renderPhotos(data, addToGallery = false) {
-  if (data.hits.length === 0 && !(page * 40 >= totalHits)) {
+  if (data.hits.length === 0) {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
@@ -79,6 +79,9 @@ searchQuery.addEventListener('submit', async event => {
   const searchElem = searchQuery.elements[0].value.trim();
   if (searchElem === '') {
     Notiflix.Notify.failure('Please enter what you are looking for.');
+    gallery.innerHTML = '';
+    loadButton.classList.add('hidden');
+    return;
   } else {
     currentQuery = searchElem;
     page = 1;
@@ -86,8 +89,15 @@ searchQuery.addEventListener('submit', async event => {
 
   try {
     const photos = await fetchPhotos(searchQuery, page);
+    totalHits = photos.totalHits;
     renderPhotos(photos);
-    loadButton.classList.remove('hidden');
+    if (photos.hits.length === 0) {
+      loadButton.classList.add('hidden');
+    } else if (photos.hits.length < 40) {
+      loadButton.classList.add('hidden');
+    } else {
+      loadButton.classList.remove('hidden');
+    }
   } catch (error) {
     Notiflix.Notify.failure(`${error}`);
   }
@@ -98,13 +108,16 @@ loadButton.addEventListener('click', async () => {
   try {
     const photos = await fetchPhotos();
     renderPhotos(photos, true);
-    loadMorePhotos(photos.hits.length, photos.totalHits);
+    loadMorePhotos(photos.hits.length);
+    if (photos.hits.length === 0) {
+      loadButton.classList.add('hidden');
+    }
   } catch (error) {
     Notiflix.Notify.failure(`${error}`);
   }
 });
 
-function loadMorePhotos(totalHits) {
+function loadMorePhotos() {
   if (page * 40 >= totalHits) {
     loadButton.classList.add('hidden');
     Notiflix.Notify.failure(
